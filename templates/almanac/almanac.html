@@ -1,0 +1,81 @@
+{% extends "shared/grid_base.html" %}
+{% block title %}Almanac{% endblock %}
+{% block main_content %}
+
+<h1>Almanac.</h1>
+<ul>
+    <li><a href="/almanac/moon_illumination">Moon Illumination, Next Three Months</a></li>
+
+</ul>
+<div class="container">
+
+  <h1 class="fw-light text-left text-lg-start mt-4 mb-0">Charts Gallery</h1>
+
+  <hr class="mt-2 mb-5">
+
+  <div class="row text-center text-lg-start">
+
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/almanac/daylight_length.png') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/daylight_length.png') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/almanac/sun_elevation.png') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/sun_elevation.png') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/almanac/az_sunrise_sunset_SF.png') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/az_sunrise_sunset_SF.png') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/almanac/planets_visible_SF.png') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/planets_visible_SF.png') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/almanac/jupiter_planets_visible_SF_22_53.png') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/jupiter_planets_visible_SF_22_53.png') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/almanac/saturn_planets_visible_SF_22_53.png') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/saturn_planets_visible_SF_22_53.png') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/almanac/eclipse_skymap.png') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/eclipse_skymap.png') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/almanac/clock_time_solar_noon.png') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/clock_time_solar_noon.png') }}" alt="">
+      </a>
+    </div>
+{#    <div class="col-lg-3 col-md-4 col-6">#}
+{#      <a href="#" class="d-block mb-4 h-100">#}
+{#        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/paulbasslogo.png') }}" alt="">#}
+{#      </a>#}
+{#    </div>#}
+{#    <div class="col-lg-3 col-md-4 col-6">#}
+{#      <a href="#" class="d-block mb-4 h-100">#}
+{#        <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/G9Rfc1qccH4/400x300" alt="">#}
+{#      </a>#}
+{#    </div>#}
+{#    <div class="col-lg-3 col-md-4 col-6">#}
+{#      <a href="#" class="d-block mb-4 h-100">#}
+{#        <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/aJeH0KcFkuc/400x300" alt="">#}
+{#      </a>#}
+{#    </div>#}
+{#    <div class="col-lg-3 col-md-4 col-6">#}
+{#      <a href="#" class="d-block mb-4 h-100">#}
+{#        <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/p2TQ-3Bh3Oo/400x300" alt="">#}
+{#      </a>#}
+{#    </div>#}
+  </div>
+
+</div>
+{% endblock %}

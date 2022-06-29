@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome{% endblock %}</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style2.css') }}">
+</head>
+
+<div class="topnav">
+  <a href="/">Home</a>
+  <a href="/baseball">Baseball</a>
+  <a href="#">Contact</a>
+</div>
+
+<body>
+
+<img src="{{ url_for('static', filename = 'img/paulbasslogo.png') }}" alt="Paul Logo",
+     height="175", width="120", location="right">
+
+<div class="main_content">
+    {% block main_content %}{% endblock %}
+</div>
+
+<div class="footer">
+  <p>Paul Clanon<br>
+        pac@well.com</p>
+{#   Paul Clanon#}
+{#        pac@well.com#}
+</div>
+
+
+</body>
+</html>

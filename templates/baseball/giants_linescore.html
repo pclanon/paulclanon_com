@@ -1,0 +1,10 @@
+{% extends "shared/grid_base.html" %}
+{% block title %}Last Game{% endblock %}
+{% block main_content %}
+
+<h1>Linescore, Giants' Last Game</h1>
+    <h2>{{ last_game_str }}</h2>
+<div>{{ line_score|safe }}</div>
+
+{% endblock %}
+

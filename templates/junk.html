@@ -1,0 +1,15 @@
+
+{% extends "shared/base.html" %}
+{% block title %}Next Game{% endblock %}
+{% block main_content %}
+
+<h1>Giants' Next Game</h1>
+
+<h2>{{ next_game_str }}</h2>
+
+{% endblock %}
+
+
+<div class="col-md-6"><img src="{{ url_for('static', filename = 'img/paulbasslogo.png') }}" alt="Paul Logo",
+    height="130", width="80">
+    </div>

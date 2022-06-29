@@ -1,0 +1,9 @@
+{% extends "shared/grid_base.html" %}
+{% block title %}Moon Illumination{% endblock %}
+{% block main_content %}
+
+<body>
+<img class="img-fluid" src="{{ url_for('static', filename = 'img/moon_illumination.png') }}",
+     alt="Moon illumination chart">
+</body>
+{% endblock %}

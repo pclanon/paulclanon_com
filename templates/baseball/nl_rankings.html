@@ -1,0 +1,10 @@
+{% extends "shared/grid_base.html" %}
+{% block title %}Rankings{% endblock %}
+{% block main_content %}
+
+    <h1>NL Rankings, Selected Stats</h1>
+    <h2>{{ now }}</h2>
+
+    <div>{{ teams_rank_styled|safe }}</div>
+
+{% endblock %}
