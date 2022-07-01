@@ -47,6 +47,15 @@ def giants_next_game_run_script():
 
     return render_template('baseball/giants_next_game.html', next_game_str=next_game)
 
+@app.route('/baseball/current_standings')
+def current_standings_run_script():
+    current_standings = giants_dashboard.make_standings_table()
+    now = datetime.datetime.now()
+    now_str = datetime.datetime.strftime(now, ('%a %b %-d %Y %-I:%M %p '))
+
+    return render_template('baseball/current_standings.html', current_standings_str=current_standings,
+                           now=now_str)
+
 @app.route('/almanac')
 def almanac():
     return render_template('almanac/almanac.html')
@@ -55,6 +64,14 @@ def almanac():
 def moon_illumination():
     almanac_items.moon_illumination_chart()
     return render_template('/almanac/moon_illumination.html')
+
+@app.route('/music')
+def music():
+    return render_template('music/music.html')
+
+@app.route('/allsky')
+def allsky():
+    return render_template('allsky/allsky.html')
 
 
 if __name__ == "__main__":

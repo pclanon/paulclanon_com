@@ -1,0 +1,10 @@
+{% extends "shared/grid_base.html" %}
+{% block title %}Current Standings{% endblock %}
+{% block main_content %}
+
+    <h1>Current Standings</h1>
+    <h2>{{ now }}</h2>
+
+    <div>{{ current_standings_str|safe }}</div>
+
+{% endblock %}

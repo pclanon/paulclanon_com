@@ -11,6 +11,8 @@ body {
   background-position: 75% 25%;
   background-repeat: no-repeat;
   /*background-image: url("img/paulbasslogo.png")*/
+  background-color: rgb(225, 225, 212);
+
 }
 
 /* Style the top navigation bar */
@@ -64,3 +66,23 @@ body {
   padding: 14px 16px;
   text-decoration: none;
 }
+
+.page-holder {
+  min-height: 100vh;
+}
+
+.bg-cover {
+  background-size: cover !important;
+}
+/*@import "bootstrap/scss/utilities";*/
+
+.opacity-0 { opacity: 0 !important; }
+.opacity-25 { alpha-value: .25 }
+/*.opacity-25 { opacity: .25 !important; }*/
+.opacity-50 { opacity: .5 !important; }
+.opacity-75 { opacity: .75 !important; }
+.opacity-100 { opacity: 1 !important; }
+
+
+
+

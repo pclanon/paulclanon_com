@@ -1,0 +1,141 @@
+{% extends "shared/grid_base.html" %}
+{% block title %}Allsky{% endblock %}
+{% block main_content %}
+
+<h1>Allsky</h1>
+    <p>I built two cameras with Raspberry Pi 4B computers to watch the sky so I don't have to.
+    It's mainly about meteors, but also whatever else happens to pop up.</p>
+
+<div class="container">
+<h1  class="fw-light text-left text-lg-start mt-4 mb-0">Last Night's Images</h1>
+    <p>Keograms show sky conditions minute by minute through the night.</p>
+
+    <div class="row text-center text-lg-start">
+
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" alt="">
+          </a>
+        </div>
+    </div>
+
+    <p>Startrails reassure you that the earth is still spinning.</p>
+
+    <div class="row text-center text-lg-start">
+
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" alt="">
+          </a>
+        </div>
+    </div>
+
+    <p>Timelapses stitch together all the night's images into a short video.</p>
+    <div class="row text-center text-lg-start">
+
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" alt="">
+          </a>
+        </div>
+    </div>
+</div>
+
+<hr class="mt-2 mb-5">
+  <h1  class="fw-light text-left text-lg-start mt-4 mb-0">Photo Gallery</h1>
+    <div class="row text-center text-lg-start">
+
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/allsky/20211127_stacked_image.jpg') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/20211127_stacked_image.jpg') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/allsky/liveview-image.jpg') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/liveview-image.jpg') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/allsky/arrowed_image-20220621024243.jpg') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/arrowed_image-20220621024243.jpg') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/image-20210617034806.jpg') }}" alt="">
+      </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-6">
+      <a href="{{ url_for('static', filename = 'img/allsky/image-20220619233030.jpg') }}" class="d-block mb-4 h-100">
+        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/image-20220619233030.jpg') }}" alt="">
+      </a>
+    </div>
+  </div>
+<hr class="mt-2 mb-5">
+<div class="container">
+    <h1  class="fw-light text-left text-lg-start mt-4 mb-0">SkyNet 1 & 2</h1>
+        <p>The cameras.</p>
+
+      <div class="row text-center text-lg-start">
+
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/IMG_8757.png') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/IMG_8757.png') }}" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/IMG_8990.png') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/IMG_8990.png') }}" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/IMG_9016.png') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/IMG_9016.png') }}" alt="">
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{{ url_for('static', filename = 'img/allsky/IMG_9067.png') }}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/allsky/IMG_9067.png') }}" alt="">
+          </a>
+        </div>
+</div>
+
+{#    <div class="col-lg-3 col-md-4 col-6">#}
+{#      <a href="#" class="d-block mb-4 h-100">#}
+{#        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/paulbasslogo.png') }}" alt="">#}
+{#      </a>#}
+{#    </div>#}
+{#    <div class="col-lg-3 col-md-4 col-6">#}
+{#      <a href="#" class="d-block mb-4 h-100">#}
+{#        <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/G9Rfc1qccH4/400x300" alt="">#}
+{#      </a>#}
+{#    </div>#}
+{#    <div class="col-lg-3 col-md-4 col-6">#}
+{#      <a href="#" class="d-block mb-4 h-100">#}
+{#        <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/aJeH0KcFkuc/400x300" alt="">#}
+{#      </a>#}
+{#    </div>#}
+{#    <div class="col-lg-3 col-md-4 col-6">#}
+{#      <a href="#" class="d-block mb-4 h-100">#}
+{#        <img class="img-fluid img-thumbnail" src="https://source.unsplash.com/p2TQ-3Bh3Oo/400x300" alt="">#}
+{#      </a>#}
+{#    </div>#}
+  </div>
+
+</div>
+{% endblock %}

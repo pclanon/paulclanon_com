@@ -1,12 +1,20 @@
 {% extends "shared/grid_base.html" %}
 {% block main_content %}
 
-<h1>Welcome. </h1>
+<h1>Welcome</h1>
+    <p>I'm a San Francisco musician, baseball fan, and astrophotographer. <br>You might be some of
+    those things too.</p>
+
+<img style="margin-bottom:1cm;" src="{{ url_for('static', filename = 'img/home/paul_headshot_beach.png') }}" alt="Paul Headshot",
+     height="360", width="480">
+
     <h2>Select an Interest.</h2>
 
 <ul>
     <li><a href="/baseball">Baseball</a></li>
     <li><a href="/almanac">Almanac</a></li>
+    <li><a href="/music">Music</a></li>
+    <li><a href="/allsky">Allsky</a></li>
 </ul>
 
 {% endblock %}

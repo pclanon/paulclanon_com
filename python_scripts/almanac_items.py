@@ -32,7 +32,7 @@ def moon_illumination_chart():
     sun_and_moon_df.plot(kind='line', y='MOON ILLUMINATION', linewidth=3, color='b', ax=ax, legend=None)
     plt.xlabel('', fontsize=14)
     plt.title('Moon Illumination', fontsize=20)
-    fig.savefig('/Users/paulclanon/Documents/Python_Scripts/PycharmProjects/paulclanon_com/static/img/moon_illumination.png',
+    fig.savefig('/Users/paulclanon/Documents/Python_Scripts/PycharmProjects/paulclanon_com/static/img/almanac/moon_illumination.png',
                 bbox_inches='tight', dpi=300)
 
 if __name__ == '__main__':

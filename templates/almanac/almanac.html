@@ -2,14 +2,19 @@
 {% block title %}Almanac{% endblock %}
 {% block main_content %}
 
-<h1>Almanac.</h1>
+<h1>Almanac</h1>
+    <p>I'm an amateur astronomer who likes to go to bed early, so I build cameras
+    to take pictures automatically all night for me, and I use Python to investigate what's happening
+    in the sky.</p>
 <ul>
     <li><a href="/almanac/moon_illumination">Moon Illumination, Next Three Months</a></li>
+    <p>Starting a week ago and going out three months. Handy for planning astrophotography
+    or vampire-hunting.</p>
 
 </ul>
 <div class="container">
-
-  <h1 class="fw-light text-left text-lg-start mt-4 mb-0">Charts Gallery</h1>
+<h1  class="fw-light text-left text-lg-start mt-4 mb-0">Charts Gallery</h1>
+    <p>Made to answer specific questions and stored here.</p>
 
   <hr class="mt-2 mb-5">
 
@@ -55,6 +60,7 @@
         <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/almanac/clock_time_solar_noon.png') }}" alt="">
       </a>
     </div>
+  </div>
 {#    <div class="col-lg-3 col-md-4 col-6">#}
 {#      <a href="#" class="d-block mb-4 h-100">#}
 {#        <img class="img-fluid img-thumbnail" src="{{ url_for('static', filename = 'img/paulbasslogo.png') }}" alt="">#}
