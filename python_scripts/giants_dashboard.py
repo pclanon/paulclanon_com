@@ -123,6 +123,8 @@ def make_linescore_last_giants_game():
     # Get line score data
     most_recent_game_id = statsapi.last_game(137)  # 137=Giants team ID
     line_score = statsapi.linescore(most_recent_game_id)
+    line_score = line_score.replace('White Sox', 'WhiteSox').replace('Red Sox',
+                                         'RedSox').replace('Blue Jays', 'BlueJays')
 
     for line in range(0, 3):
         l_df = pd.DataFrame(line_score.split('\n')[line].split()).T
