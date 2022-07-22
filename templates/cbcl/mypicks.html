@@ -1,0 +1,41 @@
+{% extends "shared/grid_base.html" %}
+
+{% block title %}My Picks{% endblock %}
+{% block main_content %}
+
+<form action="" method="POST">
+<h1>My Picks, Week 1</h1>
+
+<div class="col-md-3 col-md-3 col-md-6">
+<div class="row">
+<h2 class="col-3">Road</h2>
+<h2 class="col-3">Home</h2>
+</div>
+
+<body>
+
+{% for matchup in this_week_matchups %}
+
+<div class="row">
+
+        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+          <label class="btn btn-outline-primary col-3">
+
+            <input type="radio" name={{ matchup[0] }} player="ishmael" value={{ matchup[1] }}> {{ matchup[1] }}
+          </label>
+
+
+          <label class="btn btn-outline-success col-3">
+            <input type="radio" name={{ matchup[0] }} player="ishmael" value={{ matchup[2] }}> {{ matchup[2] }}
+          </label>
+        </div>
+
+</div>
+{% endfor %}
+<div class="row">
+<button class="btn btn-danger col-3" type="submit">Submit</button>
+</div>
+</div>
+</body>
+</form>
+{% endblock %}
