@@ -12,4 +12,8 @@
     </form>
     <a href="/login">Already have an account? Log in.</a>
 
+    {% for error in form.username.errors %}
+        <p>{{error}}</p>
+        {% endfor %}
+
 {% endblock %}
