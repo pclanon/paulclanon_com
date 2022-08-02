@@ -192,10 +192,16 @@ def allsky_uploads():
 @login_required
 def mypicks():
     df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
-    df = df[df['WEEK'] == 17]
-    this_week_matchups = nfl_functions.this_week_matchups(df)
-    print(current_user.username)
-    print(request.form)
+    df_this_week = df[df['WEEK'] == 18]
+    this_week_matchups = nfl_functions.this_week_matchups(df_this_week)
+    picks = request.form
+    # print(current_user.username)
+    for gameid in picks:
+        print(f'{gameid}: {picks[gameid]}')
+        df.loc[int(gameid), current_user.username.upper()] = picks[gameid]
+    print(df.head())
+    print(df.tail())
+    df.to_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv', index=False)
 
     return render_template('cbcl/mypicks.html', this_week_matchups=this_week_matchups)
 

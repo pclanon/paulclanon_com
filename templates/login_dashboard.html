@@ -2,7 +2,7 @@
 {% block title %}Next Game{% endblock %}
 {% block main_content %}
 
-<h1>Hello {{current_user.username}}, you're logged in.</h1>
+<h1>Hello {{current_user.username.capitalize()}}, you're logged in.</h1>
 
      <a href="{{url_for('logout')}}">Press here to log out.</a>
 

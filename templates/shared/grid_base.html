@@ -36,6 +36,8 @@
       <li class="nav-item">
         <a class="nav-link" href="/login">Login</a>
       </li>
+
+        {% if current_user.is_authenticated %}
         <li class="nav-item">
         <a class="nav-link" href="/cbcl/mypicks">MyPicks</a>
       </li>
@@ -43,6 +45,10 @@
         <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
+         <li class="nav-item">
+        <a class="nav-link" href="/logout">Change Password</a>
+      </li>
+        {% endif %}
     </ul>
   </div>
 </nav>
