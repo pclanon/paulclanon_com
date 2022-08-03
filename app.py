@@ -1,4 +1,4 @@
-# import bcrypt as bcrypt
+import sqlite3
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -67,6 +67,13 @@ class LoginForm(FlaskForm):
                            render_kw={'placeholder': "Password"})
     submit = SubmitField('Login')
 
+class ChangePasswordForm(FlaskForm):
+
+    password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)],
+                           render_kw={'placeholder': "New one (8-20 chars)."})
+    confirm = PasswordField(render_kw={'placeholder': "Type it again."})
+    submit = SubmitField('Register')
+
 
 @app.route('/')
 def index():
@@ -90,6 +97,23 @@ def login():
 @login_required
 def login_dashboard():
     return render_template('login_dashboard.html')
+
+
+@app.route('/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if form.password.data == form.confirm.data:
+            hashed_password = bcrypt_obj.generate_password_hash(form.password.data)
+            db.session.query(User).filter(User.username == current_user.username). \
+                update({"password": hashed_password}, synchronize_session="fetch")
+            db.session.commit()
+            return redirect(url_for('login_dashboard'))
+        else:
+            return redirect(url_for('change_password'))
+
+    return render_template('change_password.html', form=form)
 
 
 @app.route('/logout', methods=['GET', 'POST'])
