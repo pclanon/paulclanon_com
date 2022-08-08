@@ -13,6 +13,7 @@ import datetime
 import pandas as pd
 from python_scripts import giants_dashboard, almanac_items, nfl_functions
 
+players = ['barack'] # Later, import variable from nfl_functions
 
 allsky_uploads_path = '/Users/paulclanon/Documents/Python_Scripts/PycharmProjects/paulclanon_com/static/img/allsky/daily_uploads/'
 
@@ -83,6 +84,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    # print(f'Coming from {request.referrer}')
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
@@ -219,15 +221,49 @@ def mypicks():
     df_this_week = df[df['WEEK'] == 18]
     this_week_matchups = nfl_functions.this_week_matchups(df_this_week)
     picks = request.form
-    # print(current_user.username)
+
     for gameid in picks:
         print(f'{gameid}: {picks[gameid]}')
         df.loc[int(gameid), current_user.username.upper()] = picks[gameid]
     print(df.head())
     print(df.tail())
+
     df.to_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv', index=False)
 
     return render_template('cbcl/mypicks.html', this_week_matchups=this_week_matchups)
+
+
+@app.route('/cbcl/this_weeks_picks_table', methods=['GET','POST'])
+@login_required
+def this_weeks_picks():
+    this_weeks_picks_table_styled = this_weeks_picks_table(players)
+
+    return render_template('cbcl/this_weeks_picks_table.html', this_weeks_picks=this_weeks_picks_table_styled)
+
+
+
+def this_weeks_picks_table(players):
+    """Produce the table showing players' picks for the week, and lone-wolf picks"""
+    this_weeks_picks_df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
+
+    this_weeks_picks_df = this_weeks_picks_df.filter(['WEEK', 'ROAD TEAM', 'HOME TEAM'] + ['BARACK'])
+
+    # this_weeks_picks_df = sheep_scores(this_weeks_picks_df, players)
+
+    this_weeks_picks_df_styled = (this_weeks_picks_df.style
+                                  # .applymap(lambda v: 'background-color: yellow' if v == 'Giants' else '')
+                                  .hide(axis=0)
+                                  # .set_properties(**{'background-color': 'green'}, subset=players)
+                                  # .highlight_max(color='palegreen', axis=0, subset='R')
+                                  .set_properties(**{'text-align': 'center'})
+                                  # .set_properties(**{'text-align': 'left'}, subset='Final')
+                                  .set_table_styles([dict(selector='th', props=[('text-align', 'left')])])
+                                  )
+
+    # Convert styled line score df to html
+    this_weeks_picks_df_styled = this_weeks_picks_df_styled.to_html()
+
+    return this_weeks_picks_df_styled
 
 if __name__ == "__main__":
     app.run()
