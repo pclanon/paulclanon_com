@@ -11,9 +11,10 @@ from werkzeug.utils import secure_filename
 import flask_monitoringdashboard as dashboard
 import datetime
 import pandas as pd
+import numpy as np
 from python_scripts import giants_dashboard, almanac_items, nfl_functions
 
-players = ['barack'] # Later, import variable from nfl_functions
+players = ['BARACK', 'MICHELLE'] # Later, import variable from nfl_functions
 
 allsky_uploads_path = '/Users/paulclanon/Documents/Python_Scripts/PycharmProjects/paulclanon_com/static/img/allsky/daily_uploads/'
 
@@ -193,77 +194,70 @@ def music():
 def allsky():
     return render_template('allsky/allsky.html')
 
-@app.route('/allsky_uploads', methods=['GET', 'POST'])
-def allsky_uploads():
+# @app.route('/allsky_uploads', methods=['GET', 'POST'])
+# def allsky_uploads():
+#
+#     if request.method == 'POST':
+#         if 'allsky_upload' not in request.files:
+#             return redirect(request.url)
+#         file = request.files['allsky_upload']
+#
+#         if file.filename == '':
+#             return redirect(request.url)
+#
+#         if file.filename.lower().endswith(('.jpg', '.mp4')):
+#             filename = secure_filename(file.filename)
+#             file.save(f'{allsky_uploads_path}{filename}')
+#             return redirect(request.url)
+#     return '''
+#             <h1>Upload</h1>
+#             <form method="post" enctpye="multipart/form-data">
+#             <input type="file" name="file">
+#             <input type="submit" name="Upload">
+#         '''
 
-    if request.method == 'POST':
-        if 'allsky_upload' not in request.files:
-            return redirect(request.url)
-        file = request.files['allsky_upload']
-
-        if file.filename == '':
-            return redirect(request.url)
-
-        if file.filename.lower().endswith(('.jpg', '.mp4')):
-            filename = secure_filename(file.filename)
-            file.save(f'{allsky_uploads_path}{filename}')
-            return redirect(request.url)
-    return '''
-            <h1>Upload</h1>
-            <form method="post" enctpye="multipart/form-data">
-            <input type="file" name="file">
-            <input type="submit" name="Upload">
-        '''
 @app.route('/cbcl/mypicks', methods=['GET','POST'])
 @login_required
 def mypicks():
     df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
-    df_this_week = df[df['WEEK'] == 18]
+    df_this_week = df[df['WEEK'] == 1]
     this_week_matchups = nfl_functions.this_week_matchups(df_this_week)
+
     picks = request.form
+    if picks:
+        for gameid in picks:
+            df.loc[int(gameid), current_user.username.upper()] = picks[gameid]
 
-    for gameid in picks:
-        print(f'{gameid}: {picks[gameid]}')
-        df.loc[int(gameid), current_user.username.upper()] = picks[gameid]
-    print(df.head())
-    print(df.tail())
+        df.to_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv', index=False)
 
-    df.to_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv', index=False)
+        return redirect(url_for('this_weeks_picks'))
 
     return render_template('cbcl/mypicks.html', this_week_matchups=this_week_matchups)
 
 
-@app.route('/cbcl/this_weeks_picks_table', methods=['GET','POST'])
+@app.route('/cbcl/this_weeks_picks', methods=['GET','POST'])
 @login_required
 def this_weeks_picks():
-    this_weeks_picks_table_styled = this_weeks_picks_table(players)
-
-    return render_template('cbcl/this_weeks_picks_table.html', this_weeks_picks=this_weeks_picks_table_styled)
-
-
-
-def this_weeks_picks_table(players):
-    """Produce the table showing players' picks for the week, and lone-wolf picks"""
-    this_weeks_picks_df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
-
-    this_weeks_picks_df = this_weeks_picks_df.filter(['WEEK', 'ROAD TEAM', 'HOME TEAM'] + ['BARACK'])
-
-    # this_weeks_picks_df = sheep_scores(this_weeks_picks_df, players)
-
+    df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
+    this_weeks_picks_df = df[df['WEEK'] == 1]
+    this_weeks_picks_df = this_weeks_picks_df.filter(['WEEK', 'ROAD TEAM', 'HOME TEAM'] + players)
+    this_weeks_picks_df = this_weeks_picks_df.rename(columns={'ROAD TEAM': 'Road', 'HOME TEAM': 'Home'})
+    this_weeks_picks_df['LONE WOLF'] = nfl_functions.make_lone_wolf_column(this_weeks_picks_df, players)
     this_weeks_picks_df_styled = (this_weeks_picks_df.style
-                                  # .applymap(lambda v: 'background-color: yellow' if v == 'Giants' else '')
+                                  .apply(nfl_functions.color_lone_wolfs, subset=players + ['LONE WOLF'], axis=1)
+
                                   .hide(axis=0)
-                                  # .set_properties(**{'background-color': 'green'}, subset=players)
-                                  # .highlight_max(color='palegreen', axis=0, subset='R')
+                                  .set_properties(**{'background-color': 'gainsboro'},
+                                                  subset=['Road', 'Home'])
                                   .set_properties(**{'text-align': 'center'})
-                                  # .set_properties(**{'text-align': 'left'}, subset='Final')
-                                  .set_table_styles([dict(selector='th', props=[('text-align', 'left')])])
-                                  )
 
-    # Convert styled line score df to html
-    this_weeks_picks_df_styled = this_weeks_picks_df_styled.to_html()
+                                  .set_table_styles([dict(selector='th', props=[('text-align', 'center')])])
 
-    return this_weeks_picks_df_styled
+                                  .hide_columns('LONE WOLF')
+                                  .to_html())
+
+    return render_template('cbcl/this_weeks_picks_table.html', this_weeks_picks=this_weeks_picks_df_styled)
+
 
 if __name__ == "__main__":
     app.run()
