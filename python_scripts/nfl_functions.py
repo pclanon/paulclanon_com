@@ -54,5 +54,29 @@ def color_lone_wolfs(row):
     # else:
     #     return [default, default, default, default, default, default, default]
 
+
+def make_df_of_this_weeks_scores():
+    """Make a dataframe to use as a lookup table for scores this week,
+            indexed by team name. Example: test_df = make_df_of_this_weeks_scores()
+            test_df['SCORE'].loc['Broncos']"""
+
+    url = 'https://www.pro-football-reference.com/years/2022/week_1.htm'
+    dfs = pd.read_html(url) # Returns a list of dataframes
+
+    team_scores_this_week_df = pd.DataFrame()
+
+    for df in dfs:
+        df = df[1:]
+        team_scores_this_week_df = pd.concat([df, team_scores_this_week_df], axis=0, ignore_index=True)
+
+    # Give columns descriptive names, drop unneeded columns, drop cities from team names, index by TEAM
+    team_scores_this_week_df = (team_scores_this_week_df.rename(columns={0: 'TEAM', 1: 'SCORE'})
+                                .filter(['TEAM', 'SCORE']))
+    team_scores_this_week_df['TEAM'] = team_scores_this_week_df['TEAM'].apply(lambda t: t.split()[-1])
+    team_scores_this_week_df = team_scores_this_week_df.set_index('TEAM')
+
+    return team_scores_this_week_df
+
+
 if __name__ == '__main__':
     this_week_matchups(df)
