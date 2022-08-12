@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
@@ -12,12 +13,15 @@ def this_week_matchups(df):
 
 
 def identify_lone_wolf_pick(row):
+    """After at least two people have made picks, look for lone wolf"""
     picks = row.tolist()
+    picks_not_nans = [p for p in picks if isinstance(p, str)]
     lw = False
 
-    for p in picks:
-        if picks.count(p) == 1:
-            lw = p
+    if len(picks_not_nans) > 2:
+        for p in picks:
+            if picks.count(p) == 1:
+                lw = p
     return lw
 
 
@@ -32,11 +36,13 @@ def color_lone_wolfs(row):
     default = ''
 # Have to brute-force each player into this function.
     if row['BARACK'] == row['LONE WOLF']:
-        return [highlight, default, default]
+        return [highlight, default, default, default]
     elif row['MICHELLE'] == row['LONE WOLF']:
-        return [default, highlight, default]
+        return [default, highlight, default, default]
+    elif row['SASHA'] == row['LONE WOLF']:
+        return [default, default, highlight, default]
     else:
-        return [default, default, default]
+        return [default, default, default, default]
 
 
     # if row['PAUL'] == row['LONE WOLF']:

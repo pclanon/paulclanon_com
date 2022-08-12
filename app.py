@@ -14,7 +14,7 @@ import pandas as pd
 import numpy as np
 from python_scripts import giants_dashboard, almanac_items, nfl_functions
 
-players = ['BARACK', 'MICHELLE'] # Later, import variable from nfl_functions
+players = ['BARACK', 'MICHELLE', 'SASHA'] # Later, import variable from nfl_functions
 
 allsky_uploads_path = '/Users/paulclanon/Documents/Python_Scripts/PycharmProjects/paulclanon_com/static/img/allsky/daily_uploads/'
 
