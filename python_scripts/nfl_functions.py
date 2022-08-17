@@ -84,5 +84,37 @@ def make_df_of_this_weeks_scores():
     return team_scores_this_week_df
 
 
+def make_dataframe_of_colors(all_games_df, week_to_run, players):
+    """For use in styling. Make dataframe in same shape as main dataframe, with each cell
+    showing wanted color value. Feed as argument to .set_td_classes"""
+    df = all_games_df
+    R = df[df['WEEK'] == week_to_run].filter(items=['WEEK', 'ROAD TEAM',
+                        'ROAD SCORE', 'HOME SCORE', 'HOME TEAM'] + players)
+
+    R_copy_for_colors = pd.DataFrame(index=R.index, columns=R.columns)
+
+    for player in players:
+        conditions = [((R[player] == R['ROAD TEAM']) & (R['ROAD SCORE'] > R['HOME SCORE'])) | (
+                    (R[player] == R['HOME TEAM']) & (R['ROAD SCORE'] < R['HOME SCORE'])),
+                      ((R[player] == R['ROAD TEAM']) & (R['ROAD SCORE'] < R['HOME SCORE'])) | (
+                                  (R[player] == R['HOME TEAM']) & (R['ROAD SCORE'] > R['HOME SCORE'])),
+                      ((R[player] == R['ROAD TEAM']) & (R['ROAD SCORE'] == R['HOME SCORE'])) | (
+                                  (R[player] == R['HOME TEAM']) & (R['ROAD SCORE'] == R['HOME SCORE']))]
+
+        values = ['white', 'red', 'lightgray']
+
+        R_copy_for_colors[player] = np.select(conditions, values)
+
+    conditions = [(R['ROAD SCORE'] > R['HOME SCORE']), (R['ROAD SCORE'] < R['HOME SCORE']),
+                  (R['ROAD SCORE'] == R['HOME SCORE'])]
+    values = ['yellow', 'white', 'lightgray']
+    R_copy_for_colors['ROAD TEAM'] = np.select(conditions, values)
+    values = ['white', 'yellow', 'lightgray']
+    R_copy_for_colors['HOME TEAM'] = np.select(conditions, values)
+    R_copy_for_colors = R_copy_for_colors.fillna('white')
+
+    return R_copy_for_colors
+
+
 if __name__ == '__main__':
     this_week_matchups(df)

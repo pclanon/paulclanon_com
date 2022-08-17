@@ -14,8 +14,9 @@ import pandas as pd
 import numpy as np
 from python_scripts import giants_dashboard, almanac_items, nfl_functions
 
-players = ['BARACK', 'MICHELLE', 'SASHA'] # Later, import variable from nfl_functions
-
+# players = ['BARACK', 'MICHELLE', 'SASHA'] # Later, import variable from nfl_functions
+players = ['PAUL', 'SAM', 'DAVE', 'JEFF', 'DAN', 'SKELLY'] # Later, import variable from nfl_functions
+week_to_run = 1
 allsky_uploads_path = '/Users/paulclanon/Documents/Python_Scripts/PycharmProjects/paulclanon_com/static/img/allsky/daily_uploads/'
 
 def create_app():
@@ -194,27 +195,6 @@ def music():
 def allsky():
     return render_template('allsky/allsky.html')
 
-# @app.route('/allsky_uploads', methods=['GET', 'POST'])
-# def allsky_uploads():
-#
-#     if request.method == 'POST':
-#         if 'allsky_upload' not in request.files:
-#             return redirect(request.url)
-#         file = request.files['allsky_upload']
-#
-#         if file.filename == '':
-#             return redirect(request.url)
-#
-#         if file.filename.lower().endswith(('.jpg', '.mp4')):
-#             filename = secure_filename(file.filename)
-#             file.save(f'{allsky_uploads_path}{filename}')
-#             return redirect(request.url)
-#     return '''
-#             <h1>Upload</h1>
-#             <form method="post" enctpye="multipart/form-data">
-#             <input type="file" name="file">
-#             <input type="submit" name="Upload">
-#         '''
 
 @app.route('/cbcl/mypicks', methods=['GET','POST'])
 @login_required
@@ -255,8 +235,35 @@ def this_weeks_picks():
 
                                   .hide_columns('LONE WOLF')
                                   .to_html())
-
     return render_template('cbcl/this_weeks_picks_table.html', this_weeks_picks=this_weeks_picks_df_styled)
+
+
+@app.route('/cbcl/weekly_results', methods=['GET','POST'])
+@login_required
+def weekly_results():
+    # df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
+    df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL_test_year.csv')
+    df_this_week = df[df['WEEK'] == week_to_run]
+    colors_df = nfl_functions.make_dataframe_of_colors(df_this_week, 1, players)
+    styled_all_games_df = df_this_week.style.set_table_styles([
+        {"selector": ".white", "props": "background-color:white"},
+        {"selector": ".yellow", "props": "background-color:yellow"},
+        {"selector": ".red", "props": "background-color:tomato"},
+        {"selector": ".lightgray", "props": "background-color:lightgray"}
+    ])
+    styled_all_games_df = (styled_all_games_df.set_td_classes(colors_df)
+                .hide(axis=0)
+                # .set_properties(**{'background-color': 'gainsboro'},
+                #                 subset=['Road', 'Home'])
+                # .set_properties(**{'text-align': 'center'})
+
+                # .set_table_styles([dict(selector='th', props=[('text-align', 'center')])])
+
+                .hide_columns(['DATE', 'TIME', 'STADIUM', 'NOTE'])
+                .to_html())
+
+    return render_template('cbcl/weekly_results.html', styled_all_games_df=styled_all_games_df)
+
 
 
 if __name__ == "__main__":

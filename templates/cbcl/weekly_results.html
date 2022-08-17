@@ -1,0 +1,10 @@
+{% extends "shared/grid_base.html" %}
+{% block title %}Results This Week{% endblock %}
+{% block main_content %}
+
+    <h1>Results This Week</h1>
+    <h2></h2>
+
+    <div>{{ styled_all_games_df|safe }}</div>
+
+{% endblock %}
