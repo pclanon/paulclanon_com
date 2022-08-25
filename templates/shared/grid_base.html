@@ -33,17 +33,24 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/almanac">Almanac</a>
-      <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
-      </li>
+{#      <li class="nav-item">#}
+{#        <a class="nav-link" href="/login">Login</a>#}
+{#      </li>#}
 
         {% if current_user.is_authenticated %}
-        <li class="nav-item">
-        <a class="nav-link" href="/cbcl/mypicks">MyPicks</a>
-      </li><li class="nav-item">
-        <a class="nav-link" href="/cbcl//this_weeks_picks">This Week's Picks</a>
+            <li class="nav-item">
+        <a class="nav-link" href="/cbcl/mypicks">My Picks</a>
       </li>
-         </li>
+            <li class="nav-item">
+        <a class="nav-link" href="/cbcl/this_weeks_picks">This Week's Picks</a>
+      </li>
+            <li class="nav-item">
+        <a class="nav-link" href="/cbcl/weekly_results">This Week's Results</a>
+      </li>
+            <li class="nav-item">
+        <a class="nav-link" href="/cbcl/leader_board">Leader Board</a>
+      </li>
+
         <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
@@ -51,6 +58,9 @@
         <a class="nav-link" href="/change_password">Change Password</a>
       </li>
         {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
     </ul>
   </div>
 </nav>

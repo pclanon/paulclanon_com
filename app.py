@@ -13,10 +13,13 @@ import datetime
 import pandas as pd
 import numpy as np
 from python_scripts import giants_dashboard, almanac_items, nfl_functions
+from python_scripts.nfl_functions import players, week_to_run
+from python_scripts.nfl_lists_and_dicts import title_weeks
+
 
 # players = ['BARACK', 'MICHELLE', 'SASHA'] # Later, import variable from nfl_functions
-players = ['PAUL', 'SAM', 'DAVE', 'JEFF', 'DAN', 'SKELLY'] # Later, import variable from nfl_functions
-week_to_run = 1
+# players = ['PAUL', 'SAM', 'DAVE', 'JEFF', 'DAN', 'SKELLY'] # Later, import variable from nfl_functions
+# week_to_run = 1
 allsky_uploads_path = '/Users/paulclanon/Documents/Python_Scripts/PycharmProjects/paulclanon_com/static/img/allsky/daily_uploads/'
 
 def create_app():
@@ -241,8 +244,8 @@ def this_weeks_picks():
 @app.route('/cbcl/weekly_results', methods=['GET','POST'])
 @login_required
 def weekly_results():
-    # df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
-    df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL_test_year.csv')
+    df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
+    # df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL_test_year.csv')
     df_this_week = df[df['WEEK'] == week_to_run]
     colors_df = nfl_functions.make_dataframe_of_colors(df_this_week, 1, players)
     styled_all_games_df = df_this_week.style.set_table_styles([
@@ -259,12 +262,17 @@ def weekly_results():
 
                 # .set_table_styles([dict(selector='th', props=[('text-align', 'center')])])
 
-                .hide_columns(['DATE', 'TIME', 'STADIUM', 'NOTE'])
+                # .hide_columns(['DATE', 'TIME', 'STADIUM', 'NOTE'])
+                .hide(['DATE', 'TIME', 'STADIUM', 'NOTE'], axis='columns')
                 .to_html())
 
     return render_template('cbcl/weekly_results.html', styled_all_games_df=styled_all_games_df)
 
 
+@app.route('/cbcl/leader_board')
+def leader_board():
+
+    return render_template('cbcl/leader_board.html', week_title=title_weeks[week_to_run-1])
 
 if __name__ == "__main__":
     app.run()

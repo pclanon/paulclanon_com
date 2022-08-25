@@ -1,0 +1,11 @@
+{% extends "shared/grid_base.html" %}
+{% block title %}Leader Board{% endblock %}
+{% block main_content %}
+
+    <h1>Leader Board</h1>
+    <h2>Thru {{ week_title }}</h2>
+<body>
+<img class="img-fluid" src="{{ url_for('static', filename = 'img/football/leader_board.png') }}",
+     alt="Leader Board">
+</body>
+{% endblock %}
