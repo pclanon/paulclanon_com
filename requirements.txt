@@ -1,0 +1,16 @@
+flask
+flask_login
+flask_sqlalchemy
+Flask-WTF
+flask-monitoringdashboard
+flask-bcrypt
+flask_bootstrap
+wtforms
+pandas
+astroplan
+astropy
+matplotlib
+numpy
+MLB-statsapi
+pybaseball
+
