@@ -1,4 +1,4 @@
-import sqlite3
+# import sqlite3
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -52,7 +52,7 @@ class User(db.Model, UserMixin):
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[
-                           InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+                           InputRequired(), Length(min=3, max=20)], render_kw={"placeholder": "Username"})
 
     password = PasswordField(validators=[
                              InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
@@ -67,7 +67,7 @@ class RegisterForm(FlaskForm):
                 'That username already exists. Please choose a different one.')
 
 class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(min=4, max=20)],
+    username = StringField(validators=[InputRequired(), Length(min=3, max=20)],
                            render_kw={'placeholder': "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)],
                            render_kw={'placeholder': "Password"})

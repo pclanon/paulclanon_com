@@ -3,11 +3,11 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator, FixedLocator, FixedFormatter
-from python_scripts.nfl_lists_and_dicts import players, color_dict, marker_dict, week_ticks
+from python_scripts.nfl_lists_and_dicts import players, color_dict, marker_dict, week_ticks, nfl_teams
 
 
 players = ['BARACK', 'MICHELLE', 'SASHA']
-# players = ['PAUL', 'SAM', 'DAVE', 'JEFF', 'DAN', 'SKELLY'] # Later, import variable from nfl_functions
+# players = ['PAUL', 'SAM', 'DAVE', 'JEFF', 'DAN', 'SKELLY']
 week_to_run = 1
 
 df = pd.read_csv('/Users/paulclanon/Documents/NFL_2022/2022_NFL_CBCL.csv')
@@ -36,6 +36,9 @@ def identify_lone_wolf_pick(row):
 
 
 def make_lone_wolf_column(df, players):
+    for player in players: # Prevent errors at beginning of season, when some haven't picked yet
+        if player not in df.columns:
+            df[player] = None
     lone_wolf_series = df[players].apply(lambda row: identify_lone_wolf_pick(row), axis=1)
 
     return lone_wolf_series
@@ -54,6 +57,21 @@ def color_lone_wolfs(row):
     else:
         return [default, default, default, default]
 
+    # if row['PAUL'] == row['LONE WOLF']:
+    #     return [highlight, default, default, default, default, default]
+    # elif row['SAM'] == row['LONE WOLF']:
+    #     return [default, highlight, default, default, default, default]
+    # elif row['DAVE'] == row['LONE WOLF']:
+    #     return [default, default, highlight, default, default, default]
+    # elif row['JEFF'] == row['LONE WOLF']:
+    #     return [default, default, default, highlight, default, default]
+    # elif row['DAN'] == row['LONE WOLF']:
+    #     return [default, default, default, default, highlight, default]
+    # elif row['SKELLY'] == row['LONE WOLF']:
+    #     return [default, default, default, default, default, highlight]
+    # else:
+    #     return [default, default, default, default, default, default]
+
 
 def make_df_of_this_weeks_scores():
     """Make a dataframe to use as a lookup table for scores this week,
@@ -69,11 +87,15 @@ def make_df_of_this_weeks_scores():
         df = df[1:]
         team_scores_this_week_df = pd.concat([df, team_scores_this_week_df], axis=0, ignore_index=True)
 
-    # Give columns descriptive names, drop unneeded columns, drop cities from team names, index by TEAM
-    team_scores_this_week_df = (team_scores_this_week_df.rename(columns={0: 'TEAM', 1: 'SCORE'})
-                                .filter(['TEAM', 'SCORE']))
-    team_scores_this_week_df['TEAM'] = team_scores_this_week_df['TEAM'].apply(lambda t: t.split()[-1])
-    team_scores_this_week_df = team_scores_this_week_df.set_index('TEAM')
+        # Give columns descriptive names, drop unneeded columns
+        team_scores_this_week_df = (team_scores_this_week_df.rename(columns={0: 'TEAM', 1: 'SCORE'})
+                                    .filter(['TEAM', 'SCORE']))
+        # Drop cities from team names, keep scores and not other stats
+        team_scores_this_week_df['TEAM'] = team_scores_this_week_df['TEAM'].apply(lambda t: t.split()[-1])
+        team_scores_this_week_df = team_scores_this_week_df[team_scores_this_week_df['TEAM'].isin(nfl_teams)]
+
+        # index by TEAM
+        team_scores_this_week_df = team_scores_this_week_df.set_index('TEAM')
 
     return team_scores_this_week_df
 
@@ -388,5 +410,6 @@ if __name__ == '__main__':
     df = player_win_loss_tie(df, players)
     df = player_point_differential(df, players)
     win_loss_record_df = all_players_win_loss_record(df, players)
-    leader_board_df = make_leader_board_df(win_loss_record_df, players)
-    plot_leader_board(leader_board_df)
+    print(win_loss_record_df.head())
+    # leader_board_df = make_leader_board_df(win_loss_record_df, players)
+    # plot_leader_board(leader_board_df)
