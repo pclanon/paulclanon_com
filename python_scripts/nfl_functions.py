@@ -308,27 +308,6 @@ def make_leader_board_df(win_loss_record_df, players):
     return df_
 
 
-# def plot_leader_board(leader_board_df):
-#     """Plot Leader Board, save to disc"""
-#     df_ = leader_board_df
-#
-#     fig = plt.figure()
-#     ax = fig.add_subplot()
-#     ax.set_ylim(min(df_.min())-1, 1)
-#     ax.yaxis.set_major_locator(MultipleLocator(2))
-#     plt.xticks(list(range(1, len(df_) + 1)), week_ticks[0:len(df_)], fontsize=8)
-#
-#     for player in players:
-#         df_.reset_index().plot(kind='line', x='WEEK', y=f'{player} GAMES BACK', marker=marker_dict[player],
-#                                    linewidth=4, color=color_dict[player], label=player.capitalize(), ax=ax)
-#
-#     plt.title('Games Behind Leader', fontsize=20)
-#
-#     # fig.savefig(f'/Users/paulclanon/Downloads/leaderboard_week{week_to_run}.png', dpi=300)
-#     plt.show()
-#     plt.close()
-
-
 def team_results_all_games(all_games_df, teams_to_run):
     """Make dataframe showing results for teams, as opposed to players"""
     team_results_df_temp = pd.DataFrame()
@@ -399,6 +378,19 @@ def rolling_team_wins(weekly_records_df, rolling_window, teams_to_run):
 
     return rolling_df_temp
 
+def players_records_strings(win_loss_record_df, players):
+    df_ = win_loss_record_df
+
+    for player in players:
+        df_[player.capitalize()] = (df_[f'{player} W'].astype(str) + '-' + df_[f'{player} L'].astype(str)
+                         + '-' + df_[f'{player} T'].astype(str))
+
+    df_ = df_.filter([player.capitalize() for player in players], axis=1)
+
+    return df_
+
+
+
 
 if __name__ == '__main__':
     # this_week_matchups(df)
@@ -410,6 +402,9 @@ if __name__ == '__main__':
     df = player_win_loss_tie(df, players)
     df = player_point_differential(df, players)
     win_loss_record_df = all_players_win_loss_record(df, players)
+    print(win_loss_record_df.head())
+    #win_loss_record_df['Barack'] = win_loss_record_df['BARACK W'].apply(lambda x: str(x))
+    win_loss_record_df = players_records_strings(win_loss_record_df, players)
     print(win_loss_record_df.head())
     # leader_board_df = make_leader_board_df(win_loss_record_df, players)
     # plot_leader_board(leader_board_df)

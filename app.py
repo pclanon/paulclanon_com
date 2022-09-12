@@ -274,6 +274,13 @@ def leader_board():
 
     return render_template('cbcl/leader_board.html', week_title=title_weeks[week_to_run-1])
 
+
+@app.route('/cbcl/player_records', methods=['GET','POST'])
+@login_required
+def player_records():
+
+
+
 if __name__ == "__main__":
     app.run()
 
